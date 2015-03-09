@@ -1,0 +1,14 @@
+{
+  "name": "stamplay-foodme",
+  "version": "0.0.0",
+  "homepage": "https://github.com/Stamplay/stamplay-foodme",
+  "authors": [
+    "Claudio Petrini <claudio.petrini@stamplay.com>",
+    "Cristian Roselli <cristian.roselli@stamplay.com>"
+  ],
+  "license": "MIT",
+  "private": false,
+  "dependencies": {
+    "angular-ui-router": "~0.2.13"
+  }
+}
