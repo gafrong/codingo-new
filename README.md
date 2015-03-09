@@ -14,7 +14,7 @@ Feel free to implement more cool features (see the last paragraph for ideas), co
 
 This is a demo of what you can achieve with [Stamplay](http://stamplay.com).
 
-It's somewhat a clone of [JustEat](http://justeat.com) and here you can see it up and running [https://e33b72.stamplay.com](https://e33b72.stamplay.com)
+It's somewhat a clone of [JustEat](http://justeat.com) and here you can see it up and running [http://foodme.stamplayapp.com](http://foodme.stamplayapp.com)
 
 We love javascript and front end framework and this time we show you how you can create this app using [AngularJS](http://angularjs.org) to implement the client side logic. We started from the very good workshop made by Igor Minar that can be seen [here](https://github.com/IgorMinar/foodme). Here are the user stories for this example:
 
@@ -90,9 +90,9 @@ Let's define the entities for this app, we will define **Meals**, **Restaurants*
 
 After setting up this Stamplay will instantly expose Restful APIs for our newly resources the following URIs: 
 
-* `https://APPID.stamplay.com/api/cobject/v0/restaurant`
-* `https://APPID.stamplay.com/api/cobject/v0/meal`
-* `https://APPID.stamplay.com/api/cobject/v0/order`
+* `https://APPID.stamplayapp.com/api/cobject/v0/restaurant`
+* `https://APPID.stamplayapp.com/api/cobject/v0/meal`
+* `https://APPID.stamplayapp.com/api/cobject/v0/order`
 
 
 ### Webhook
@@ -109,7 +109,7 @@ Here’s how to make sure you see them new payloads:
 
 Ps: a good service to test your webhook is [hurl](http://hurl.it)
 
-![Webhook config](http://blog.stamplay.com/wp-content/uploads/2014/09/Schermata-2014-09-03-alle-12.41.59.png "Webhook config")
+![Webhook config](https://blog.stamplay.com/wp-content/uploads/2014/09/Schermata-2014-09-03-alle-12.41.59.png "Webhook config")
 
 
 ### Email
@@ -151,7 +151,7 @@ Action: Email - Send Email
 
 ### When a new order is submitted, notify the restaurant owner with an email
 
-Trigger : Custom Object - New instance
+Trigger : Webhook - Catch
 
 Action: Email - Send Email
 
@@ -265,11 +265,16 @@ Or download it as a zip file
 	
 	https://github.com/Stamplay/stamplay-foodme/archive/master.zip 
 
-Then you need to upload the frontend files in your app and you can do it in two ways:
+After launching `bower install` you need to upload the frontend files in your app by using the [CLI tool](https://github.com/Stamplay/stamplay-cli):
 
-* Copy/Upload them via the Layout section of your app on Stamplay editor
-* [Get Stamplay sync](http://cdn.stamplay.com/stamplay-sync/stamplay-sync.zip) and run **Stamplay Sync**, make it download the frontend assets of your app and then replace them with the ones you got from this repo. Stamplay Sync will upload everything for you on your app.
-
+```js
+cd your/path/to/stamplay-hackenews
+stamplay init
+/*
+ * You will need to insert your appId and your API key
+ */
+stamplay deploy
+```
 
 -----------------------
 # Next steps
@@ -280,6 +285,7 @@ Here are a few ideas for further improvement :
 * add social login like Facebook or Google to enrich user's identity
 * if the cart contains more occurencies of a meal, group them
 * let users to comment on the restaurants
+* Stripe integration
 * _Your idea here… ?_
 
 Again, for any questions drop an email to [giuliano.iacobelli@stamplay.com](mailto:giuliano.iacobelli@stamplay.com) :)
