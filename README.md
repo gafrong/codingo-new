@@ -34,10 +34,10 @@ Best of all, we used AngularJS :) Prepare to be amazed.
 
 FoodMe is built around the following building blocks
 
-* [Users](https://www.stamplay.com/docs#user)
+* [Users](http://stamplay.readme.io/v0/docs/user-component)
 * [Webhooks](http://blog.stamplay.com/how-to-use-stamplay-webhooks/)
-* [Custom Objects](https://www.stamplay.com/docs#customobject)
-* [Email](https://www.stamplay.com/docs#email)
+* [Custom Objects](http://stamplay.readme.io/v0/docs/working-with-custom-object)
+* [Email](http://stamplay.readme.io/v0/docs/working-with-email)
 
 
 ## Requirements
