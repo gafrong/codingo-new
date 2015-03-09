@@ -58,17 +58,7 @@ the app use the classic email + password login. This is used by default by the u
 
 
 ### Custom Object
-Let's define the entities for this app, we will define **Restaurants**, **Meals** and **Orders** that are defined as follows:
-
-##### Restaurant
-
-* Name: `name`, Type: `string`, The name of the restaurant
-* Name: `description`, Type: `string`, The descritpion of the restaurant
-* Name: `cusine`, Type: `string`, The type of cousine for the restaurant
-* Name: `photo`, Type: `file`, The restaurant photo
-* Name: `meals`, Type: `meals`, The menu of the restaurant
-* Name: `price`, Type: `price`, The price level for this restaurant
-* Name: `owner_email`, Type: `string`, The restaurant owner email address
+Let's define the entities for this app, we will define **Meals**, **Restaurants**,  and **Orders** that are defined as follows:
 
 ##### Meal
 
@@ -76,6 +66,16 @@ Let's define the entities for this app, we will define **Restaurants**, **Meals*
 * Name: `photo`, Type: `file`, the photo of the meal
 * Name: `description`, Type: `string`, meal's description
 * Name: `price`, Type: `number`, meal's price
+
+##### Restaurant
+
+* Name: `name`, Type: `string`, Required: `true`, The name of the restaurant
+* Name: `description`, Type: `string`, Required `false`, The descritpion of the restaurant
+* Name: `cusine`, Type: `string`, The type of cousine for the restaurant
+* Name: `photo`, Type: `file`, The restaurant photo
+* Name: `meals`, Type: `Custom Object reference to meal`, The menu of the restaurant
+* Name: `price`, Type: `number`, The price level for this restaurant
+* Name: `owner_email`, Type: `string`, The restaurant owner email address
 
 ##### Order
 
