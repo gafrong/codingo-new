@@ -249,10 +249,7 @@ After a succesfull order we will send a POST request to the webhook `ordercomple
 
 # Managing the app
 
-Everytime you create reasource using Custom Object you can manage instances of the entities in the Admin section. This will let you to easily add edit and delete restaurant, meals and orders.
-
-![Manage Restaurant](https://blog.stamplay.com/wp-content/uploads/2014/09/Schermata-2014-09-03-alle-14.05.29.png "Manage restaurant")
-
+Everytime you create resource using Custom Object you can manage instances of the entities in the Admin section. This will let you to easily add, edit and delete restaurants, meals and orders.
 
 -----------------------
 # Cloning
