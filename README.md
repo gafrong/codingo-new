@@ -12,9 +12,9 @@ Feel free to implement more cool features (see the last paragraph for ideas), co
 -----------------------
 ## FoodMe
 
-This is a demo of what you can achieve with [Stamplay](http://stamplay.com).
+This is a demo of what you can achieve with [Stamplay](https://stamplay.com).
 
-It's somewhat a clone of [JustEat](http://justeat.com) and here you can see it up and running [http://foodme.stamplayapp.com](http://foodme.stamplayapp.com)
+It's somewhat a clone of [JustEat](http://justeat.com) and here you can see it up and running [https://foodme.stamplayapp.com](https://foodme.stamplayapp.com)
 
 We love javascript and front end framework and this time we show you how you can create this app using [AngularJS](http://angularjs.org) to implement the client side logic. We started from the very good workshop made by Igor Minar that can be seen [here](https://github.com/IgorMinar/foodme). Here are the user stories for this example:
 
@@ -34,10 +34,10 @@ Best of all, we used AngularJS :) Prepare to be amazed.
 
 FoodMe is built around the following building blocks
 
-* [Users](http://stamplay.readme.io/v0/docs/user-component)
+* [Users](https://stamplay.com/docs/rest-api#user)
 * [Webhooks](http://blog.stamplay.com/how-to-use-stamplay-webhooks/)
-* [Custom Objects](http://stamplay.readme.io/v0/docs/working-with-custom-object)
-* [Email](http://stamplay.readme.io/v0/docs/working-with-email)
+* [Custom Objects](https://stamplay.com/docs/rest-api#custom-object-api)
+* [Email](https://stamplay.com/docs/rest-api#email-api)
 
 
 ## Requirements
@@ -52,9 +52,9 @@ After creating a new app on [Stamplay](https://editor.stamplay.com) let's start 
 Lets see one-by-one how they are configured:
 
 ### User
-the app use the classic email + password login. This is used by default by the user component as you can see from the image below. 
+The app use the classic email + password login. This is used by default by the user component as you can see from the image below. 
 
-![Local login](http://blog.stamplay.com/wp-content/uploads/2014/09/Schermata-2014-09-02-alle-16.31.04.png "Local login")
+![Local login](https://blog.stamplay.com/wp-content/uploads/2014/09/Schermata-2014-09-02-alle-16.31.04.png "Local login")
 
 
 ### Custom Object
@@ -251,7 +251,7 @@ After a succesfull order we will send a POST request to the webhook `ordercomple
 
 Everytime you create reasource using Custom Object you can manage instances of the entities in the Admin section. This will let you to easily add edit and delete restaurant, meals and orders.
 
-![Manage Restaurant](http://blog.stamplay.com/wp-content/uploads/2014/09/Schermata-2014-09-03-alle-14.05.29.png "Manage restaurant")
+![Manage Restaurant](https://blog.stamplay.com/wp-content/uploads/2014/09/Schermata-2014-09-03-alle-14.05.29.png "Manage restaurant")
 
 
 -----------------------
