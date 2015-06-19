@@ -5,31 +5,25 @@ It acts as a simple caching layer between user status and controllers
 Whenever one or more controller on the same page are in need to know 
 the user status the API call would be effectively done only one time
 */
-app.factory('userStatus', ['$http', function ($http) {
+app.factory('userStatus', ['$http','$stamplay',function ($http, $stamplay) {
+	
 	var user = {};
+	
 	return {
-		loginUser: function (user) {
-			var call = $http({
-				method: 'POST',
-				data: user,
-				url: '/auth/v0/local/login'
-			});
-			return call;
+		loginUser: function (data) {
+			var loginUser = $stamplay.User().Model;
+			return loginUser.login(data.email,data.password)
 		},
-		registerUser: function (user) {
-			return $http({
-				method: 'POST',
-				data: user,
-				url: '/api/user/v0/users'
-			})
+		registerUser: function (data) {
+			var newUser = $stamplay.User().Model;
+			return newUser.signup(data)
+		},
+		logout: function(){
+			return $stamplay.User().Model.logout()
 		},
 		//simple call to get userStatus
-		getUserCall: function () {
-			var call = $http({
-				method: 'GET',
-				url: '/api/user/v0/getStatus'
-			})
-			return call;
+		getUserModel: function () {
+			return $stamplay.User().Model;
 		},
 		// Getter and Setter method
 		getUser: function () {

@@ -13,12 +13,10 @@ app.controller('LoginCtrl', ['$scope', '$state', 'userStatus', 'globalVariable',
 				email: $scope.email,
 				password: $scope.password
 			}
-			userStatus.loginUser(user)
-				.success(function (data, status) {
-					$state.go('home');
-				})
-				.error(function (data, status) {
-					$scope.error = data;
-				})
+			userStatus.loginUser(user).then(function(){
+				window.location.href="/"
+			},function(){
+				$scope.error = data;
+			})
 		}
 }])

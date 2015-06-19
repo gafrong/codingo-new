@@ -8,7 +8,7 @@
 
       <ul class="nav pull-right">
         <li ng-show="logged" ng-class="{active: routeIs('logout')}">
-          <a href="/auth/v0/logout">Logout</a>
+          <a ng-click="logout()">Logout</a>
         </li>
         <li ng-hide="logged" ng-class="{active: routeIs('login')}">
           <a ui-sref="login">Login</a>

@@ -35,17 +35,17 @@
       </tr>
       <tr ng-repeat="restaurant in restaurants | orderBy:order" >
         <td>
-          <a ui-sref="menu ({id: restaurant._id})">
-            <img class="img-rounded pull-left" ng-src="{{restaurant.photo}}">
-            <b>{{restaurant.name}} -   {{restaurant.cuisine}}</b>
+          <a ui-sref="menu ({id: restaurant.instance._id})">
+            <img class="img-rounded pull-left" ng-src="{{restaurant.instance.photo}}">
+            <b>{{restaurant.instance.name}} -   {{restaurant.instance.cuisine}}</b>
           </a>
-          <p>{{restaurant.description}}</p>
+          <p>{{restaurant.instance.description}}</p>
         </td>
         <td>
-          <fm-rating ng-model="$parent.restaurant.actions.ratings.avg" readonly="true" symbol="&#9733;"></fm-rating>
+          <fm-rating ng-model="$parent.restaurant.instance.actions.ratings.avg" readonly="true" symbol="&#9733;"></fm-rating>
         </td>
         <td>
-          <fm-rating ng-model="$parent.restaurant.price" symbol="$" readonly="true" ></fm-rating>
+          <fm-rating ng-model="$parent.restaurant.instance.price" symbol="$" readonly="true" ></fm-rating>
         </td>
       </tr>
     </table>

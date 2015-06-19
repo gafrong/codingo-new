@@ -17,7 +17,7 @@
  * in the restaurant profile page.
  */
 
-app.directive('fmRating', ['$http', function ($http) {
+app.directive('fmRating', ['$http', 'restaurant', function ($http, restaurant) {
 	return {
 		restrict: 'E',
 		scope: {
@@ -83,19 +83,13 @@ app.directive('fmRating', ['$http', function ($http) {
 				if (scope.deleted && !scope.alreadyVoted) {
 					var id = attrs.model;
 					//rate 'id' restaurant
-					$http({
-							method: 'PUT',
-							data: {
-								rate: index + 1
-							},
-							url: '/api/cobject/v0/restaurant/' + id + '/rate'
-						})
-						.success(function (data) {
-							scope.alreadyVoted = true;
-						})
-						.error(function (data) {
-							console.log(data)
-						})
+					var model = restaurant.get();
+					model.set('_id',id);
+					model.rate(index + 1).then(function(){
+						scope.alreadyVoted = true;
+					}, function(){
+						console.log('Error')
+					})
 				}
 			};
 

@@ -14,27 +14,28 @@
     <link href="./assets/bootstrap-united.css" rel="stylesheet">
     <link href="./assets/app.css" rel="stylesheet">
     <script src="./assets/jquery-1.9.1.js"></script>
+    <script src="./assets/angular.min.js"></script>
+    <script src="./bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="https://drrjhlchpvi7e.cloudfront.net/libs/stamplay-js-sdk/1.0.0/stamplay.min.js"></script>
+    <script src="/bower_components/angular-stamplay/angular-stamplay.js"></script>
 
-  <script src="./assets/angular.min.js"></script>
-  <script src="./bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script type="text/javascript">
+      var app = angular.module('stamplayFood', ['ui.router', 'ngStamplay']);
+    </script>
 
-  <script type="text/javascript">
-    var app = angular.module('stamplayFood', ['ui.router']);
-  </script>
-  <script type="text/javascript" src="./app/factories/userStatus.js"></script>  
-  <script type="text/javascript" src="./app/factories/validator.js"></script>
-  <script type="text/javascript" src="./app/factories/globalVariable.js"></script>  
-  <script type="text/javascript" src="./app/directives/FmRating.js"></script>  
-  <script type="text/javascript" src="./app/controllers/NavbarCtrl.js"></script>  
-  <script type="text/javascript" src="./app/controllers/LoginCtrl.js"></script>  
-  <script type="text/javascript" src="./app/controllers/RegistrationCtrl.js"></script>  
-  <script type="text/javascript" src="./app/controllers/RestaurantCtrl.js"></script>  
-  <script type="text/javascript" src="./app/controllers/MenuCtrl.js"></script>  
-  <script type="text/javascript" src="./app/stamplayFood.js"></script>  
-  
+    <script type="text/javascript" src="./app/factories/userStatus.js"></script>  
+    <script type="text/javascript" src="./app/factories/restaurant.js"></script>  
+    <script type="text/javascript" src="./app/factories/validator.js"></script>
+    <script type="text/javascript" src="./app/factories/globalVariable.js"></script>  
+    <script type="text/javascript" src="./app/directives/FmRating.js"></script>  
+    <script type="text/javascript" src="./app/controllers/NavbarCtrl.js"></script>  
+    <script type="text/javascript" src="./app/controllers/LoginCtrl.js"></script>  
+    <script type="text/javascript" src="./app/controllers/RegistrationCtrl.js"></script>  
+    <script type="text/javascript" src="./app/controllers/RestaurantCtrl.js"></script>  
+    <script type="text/javascript" src="./app/controllers/MenuCtrl.js"></script>  
+    <script type="text/javascript" src="./app/stamplayFood.js"></script>  
 
   </head>
-
 
   <body ng-app="stamplayFood">
     

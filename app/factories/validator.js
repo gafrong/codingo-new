@@ -9,7 +9,7 @@ app.factory('validator', ['$http', function ($http) {
 			return $http({
 				method: 'POST',
 				data: validate,
-				url: '/api/auth/v0/validate/email'
+				url: '/api/auth/v1/validate/email'
 			});
 		}
 	};

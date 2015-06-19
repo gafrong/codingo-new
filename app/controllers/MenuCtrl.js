@@ -1,57 +1,47 @@
 //controller for menu and order
-app.controller('MenuCtrl', ['$scope', '$http', 'userStatus', 'globalVariable', 'qId',
-	function MenuCtrl($scope, $http, userStatus, globalVariable, paramValue) {
+app.controller('MenuCtrl', ['$scope', '$http','$stamplay' ,'userStatus','restaurant', 'globalVariable', 'qId',
+	function MenuCtrl($scope, $http, $stamplay, userStatus, restaurant, globalVariable, paramValue) {
 
 		//Call service 
 		//if user was defined -> update $scope
-		if (userStatus.getUser().hasOwnProperty('_id')) {
-			$scope.user = userStatus.getUser();
-			//get resturant by id 
-			getRestaurant(paramValue, false)
-		} else {
-			//if user non defined, call getStatus api
-			var httpCall = userStatus.getUserCall().then(function (data) {
-				//if user is logged -> update $scope
-				if (data.status == 200 && data.data.user) {
-					$scope.user = {}
+		var user = userStatus.getUserModel()
+		user.currentUser().then(function(){
+			if(user.isLogged()){
+					$scope.user = {}; 
 					$scope.user.logged = true;
-					$scope.user.displayName = data.data.user.displayName;
-					$scope.user.picture = data.data.user.profileImg;
-					$scope.user._id = data.data.user._id;
-					userStatus.setUser(data.data.user.displayName, data.data.user.profileImg, data.data.user._id, data.data.user.email, true)
-						//get resturant by id 
+					$scope.user.displayName = user.instance.displayName;
+					$scope.user.picture = user.instance.profileImg;
+					$scope.user._id = user.instance._id;
+					userStatus.setUser(user.instance.displayName, user.instance.profileImg, user.instance._id, user.instance.email, true)
 					getRestaurant(paramValue, false)
-				} else {
-					//if user is not logged -> get restaurant by id (without possibility to rate it)
+			}else{
 					getRestaurant(paramValue, true)
-				}
-			})
-		}
+			}
+		}, function(){
+			getRestaurant(paramValue, true)
+		})
 		//function for get Restaurant by id
+
 		function getRestaurant(paramValue, notlogged) {
-			$http({
-				method: 'GET',
-				url: '/api/cobject/v0/restaurant/' + paramValue + '?populate=true'
-			}).
-			success(function (data, status) {
-				$scope.restaurant = data;
-				//Since meals are populated 
-				$scope.restaurant.menuItems = $scope.restaurant.meals;
-				var find = true;
-				//if user is logged check if he already rate this restaurant 
-				if (!notlogged) {
-					for (var i = 0; i < data.actions.ratings.users.length && find; i++) {
-						if (data.actions.ratings.users[i].userId == $scope.user._id) {
-							$scope.yourvote = data.actions.ratings.users[i].rating
-							$scope.voted = true;
-							find = false;
+			var model = restaurant.get();
+			model.fetch(paramValue, {populate:true}).then(function(){
+				$scope.$apply(function(){
+					$scope.restaurant = model.instance;
+					$scope.restaurant.menuItems = $scope.restaurant.meals;
+					var find = true;
+					if (!notlogged) {
+						for (var i = 0; i < $scope.restaurant.actions.ratings.users.length && find; i++) {
+							if ($scope.restaurant.actions.ratings.users[i].userId == $scope.user._id) {
+								$scope.yourvote = $scope.restaurant.actions.ratings.users[i].rating
+								$scope.voted = true;
+								find = false;
+							}
 						}
 					}
-				}
-
-			}).error(function (data, status) {
+				})
+			},function(){
 				$scope.error = 'Ops something went wrong'
-			})
+			}) 
 		}
 
 		//Set some variable
@@ -104,48 +94,35 @@ app.controller('MenuCtrl', ['$scope', '$http', 'userStatus', 'globalVariable', '
 				for (var i = 0; i < $scope.cart.items.length; i++) {
 					meals.push($scope.cart.items[i].name)
 				}
-				var data = {
-						email: $scope.delivery.email,
-						surname: $scope.delivery.surname,
-						address: $scope.delivery.address,
-						notes: $scope.delivery.notes,
-						meals: meals,
-						price: $scope.cart.total,
-						delivered: false
-					}
-					//Post request for create order      
-				$http({
-					method: 'POST',
-					data: data,
-					url: '/api/cobject/v0/order'
-				}).
-				success(function (data, status) {
-					//close modal and reset cart
+				var order = $stamplay.Cobject('order').Model
+				order.set('email', $scope.delivery.email)
+				order.set('surname', $scope.delivery.surname)
+				order.set('address', $scope.delivery.address)
+				order.set('notes', $scope.delivery.notes)
+				order.set('meals', meals)
+				order.set('price', $scope.cart.total)
+				order.set('delivered', false)
+
+				order.save().then(function(){
 					globalVariable.hideModal('#checkoutModal')
-					$scope.cart = {};
-					$scope.cart.items = []
-					$scope.cart.total = 0;
-
-					var hookData = {
-						restaurant_owner_email: restaurant.owner_email,
-						order: data
+					$scope.$apply(function(){
+						$scope.cart = {};
+				 		$scope.cart.items = []
+				 		$scope.cart.total = 0;
+					})
+					var webhook = new Stamplay.Webhook('ordercomplete');
+					var data = { 
+							restaurant_owner_email: restaurant.owner_email, 		
+							order: data 
 					}
-
-					$http({
-							method: 'POST',
-							data: hookData,
-							url: '/api/webhook/v0/ordercomplete/catch'
-						})
-						.success(function (data, status) {})
-						.error(function (data, status) {
-							$scope.modal.error = 'Ops Something went Wrong'
-						})
-
-
+					webhook.post(data).then(function (response) {}, function( err ){
+					  $scope.modal.error = 'Ops Something went Wrong'
+					});
 					setTimeout(function () {
 						globalVariable.showModal('#paymentModal')
 					}, 1000)
-				}).error(function (data, status) {
+
+				}, function(){
 					$scope.modal.error = 'Ops Something went Wrong'
 				})
 			}

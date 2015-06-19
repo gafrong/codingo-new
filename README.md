@@ -3,7 +3,7 @@
 
 ![FoodMe](http://2.bp.blogspot.com/-WL8GetRAOog/ULT1dTj-4PI/AAAAAAABGCg/_oSuT6xY2Uo/s1600/foodme.png "FoodMe")
 
-**This project is built on the [Stamplay](https://stamplay.com) platform and [AngularJS](http://angularjs.org) to show how to build a take-out food ordering application, let's say something similar to [JustEat](http://justeat.com) but done in the blink of an eye.**
+**This project is built on the [Stamplay](https://stamplay.com) platform with [Stamplay-JS-SDK](https://stamplay.com/docs/jssdk) and [AngularJS](http://angularjs.org) to show how to build a take-out food ordering application, let's say something similar to [JustEat](http://justeat.com) but done in the blink of an eye.**
 
 You can test it anytime simply creating a new project on Stamplay and uploading all the frontend assets with our client or our browser based code editor. 
 
@@ -90,9 +90,9 @@ Let's define the entities for this app, we will define **Meals**, **Restaurants*
 
 After setting up this Stamplay will instantly expose Restful APIs for our newly resources the following URIs: 
 
-* `https://APPID.stamplayapp.com/api/cobject/v0/restaurant`
-* `https://APPID.stamplayapp.com/api/cobject/v0/meal`
-* `https://APPID.stamplayapp.com/api/cobject/v0/order`
+* `https://APPID.stamplayapp.com/api/cobject/v1/restaurant`
+* `https://APPID.stamplayapp.com/api/cobject/v1/meal`
+* `https://APPID.stamplayapp.com/api/cobject/v1/order`
 
 
 ### Webhook
@@ -184,16 +184,15 @@ _______________________________
 
 
 ## The frontend and AngularJS
+The whole app is written in few files.
+app folder has all the controllers, four factories and one directive to handle restaurant ratings.
 
-The whole app is written in two files: `app.js` e `restaurantRating.js`
-**App.js** has all the controllers and two factories while **restaurantRating.js** has the directive to handle restaurant ratings.
-
-
-### App.js
-
-##### Factory UserStatus:
+##### Factory userStatus:
 This Factory is in charge of tracking user status via the **User** `getStatus` API call and expose it to controllers who require it. It acts as a simple caching layer between user status and controllers
 Whenever one or more controller on the same page are in need to know the user status the API call would be effectively done only one time
+
+##### Factory restaurant:
+This Factory is in charge of manage the Restaurant model and the collection. 
 
 ##### Factory globalVariable:
 This component provides access to global functionalities and variables to avoid code duplication. 
@@ -237,7 +236,7 @@ After a succesfull order we will send a POST request to the webhook `ordercomple
             order: data
           }
 
-          $http({method:'POST',data: hookData, url:'/api/webhook/v0/ordercomplete/catch'})
+          $http({method:'POST',data: hookData, url:'/api/webhook/v1/ordercomplete/catch'})
             .success(function(data, status){})
             .error(function(data, status){
               $scope.modal.error = 'Ops Something went Wrong'
@@ -246,6 +245,19 @@ After a succesfull order we will send a POST request to the webhook `ordercomple
 
 -----------------------
 
+or you can use SDK (recommended) :
+
+
+	var webhook = new Stamplay.Webhook('ordercomplete');
+					var data = { 
+							restaurant_owner_email: restaurant.owner_email, 		
+							order: data 
+					}
+					webhook.post(data).then(function (response) {}, function( err ){
+					  $scope.modal.error = 'Ops Something went Wrong'
+					});
+
+-----------------------
 
 # Managing the app
 
