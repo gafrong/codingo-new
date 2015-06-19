@@ -277,7 +277,7 @@ Or download it as a zip file
 After launching `bower install` you need to upload the frontend files in your app by using the [CLI tool](https://github.com/Stamplay/stamplay-cli):
 
 ```js
-cd your/path/to/stamplay-hackenews
+cd your/path/to/stamplay-foodme
 stamplay init
 /*
  * You will need to insert your appId and your API key
