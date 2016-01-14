@@ -37,7 +37,7 @@ app.directive('fmRating', ['$http', 'restaurant', function ($http, restaurant) {
 			var styles = [];
 			scope.styles = styles;
 
-			//attribute use for hide or show element in template 
+			//attribute use for hide or show element in template
 			if (scope.readonly == 'true') {
 				scope.readonly = true
 			} else {
@@ -57,7 +57,7 @@ app.directive('fmRating', ['$http', 'restaurant', function ($http, restaurant) {
 				});
 			}
 
-			// function for enter event 
+			// function for enter event
 			scope.enter = function (index) {
 				if (scope.readonly || scope.alreadyVoted || attrs.disabled) return;
 				angular.forEach(styles, function (style, i) {
@@ -65,7 +65,7 @@ app.directive('fmRating', ['$http', 'restaurant', function ($http, restaurant) {
 				});
 			};
 
-			// function for leave event 
+			// function for leave event
 			scope.leave = function (index) {
 				if (scope.readonly || scope.alreadyVoted || attrs.disabled) return;
 				angular.forEach(styles, function (style, i) {
@@ -74,22 +74,21 @@ app.directive('fmRating', ['$http', 'restaurant', function ($http, restaurant) {
 			};
 
 			// view -> model
-			// function trigger when select value on element 
+			// function trigger when select value on element
 			scope.select = function (index) {
 				if (scope.readonly || scope.alreadyVoted || attrs.disabled) return;
 				ngModel.$setViewValue((index == null) ? null : index + 1);
 				udpateSelectedStyles(index);
-				//  if clear link is not present an user doesn't rate 
+				//  if clear link is not present an user doesn't rate
 				if (scope.deleted && !scope.alreadyVoted) {
 					var id = attrs.model;
 					//rate 'id' restaurant
-					var model = restaurant.get();
-					model.set('_id',id);
-					model.rate(index + 1).then(function(){
-						scope.alreadyVoted = true;
-					}, function(){
-						console.log('Error')
-					})
+					Stamplay.Object("restaurant").rate(id, index + 1)
+						.then(function(){
+							scope.alreadyVoted = true;
+						}, function(){
+							console.log('Error')
+						})
 				}
 			};
 

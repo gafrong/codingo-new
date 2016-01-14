@@ -1,3 +1,6 @@
+app.run(function() {
+	Stamplay.init("foodme");
+})
 app.config(
 	['$stateProvider', '$urlRouterProvider',
 	function ($stateProvider, $urlRouterProvider) {

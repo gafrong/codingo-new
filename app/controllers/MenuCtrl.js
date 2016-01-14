@@ -2,46 +2,62 @@
 app.controller('MenuCtrl', ['$scope', '$http','$stamplay' ,'userStatus','restaurant', 'globalVariable', 'qId',
 	function MenuCtrl($scope, $http, $stamplay, userStatus, restaurant, globalVariable, paramValue) {
 
-		//Call service 
+		//Call service
 		//if user was defined -> update $scope
 		var user = userStatus.getUserModel()
-		user.currentUser().then(function(){
-			if(user.isLogged()){
-					$scope.user = {}; 
-					$scope.user.logged = true;
-					$scope.user.displayName = user.instance.displayName;
-					$scope.user.picture = user.instance.profileImg;
-					$scope.user._id = user.instance._id;
-					userStatus.setUser(user.instance.displayName, user.instance.profileImg, user.instance._id, user.instance.email, true)
-					getRestaurant(paramValue, false)
-			}else{
-					getRestaurant(paramValue, true)
-			}
-		}, function(){
-			getRestaurant(paramValue, true)
-		})
+		user.currentUser()
+			.then(function(res){
+				var user = res.user;
+				var logged = user._id;
+				if(logged !== undefined){
+						$scope.user = {};
+						$scope.user.logged = true;
+						$scope.user.displayName = user.displayName;
+						$scope.user.picture = user.profileImg;
+						$scope.user._id = user._id;
+						userStatus.setUser(user.displayName, user.profileImg, user._id, user.email, true)
+						getRestaurant(paramValue, false)
+				}else{
+						getRestaurant(paramValue, true)
+				}
+			}, function(){
+				getRestaurant(paramValue, true)
+			})
 		//function for get Restaurant by id
 
 		function getRestaurant(paramValue, notlogged) {
 			var model = restaurant.get();
-			model.fetch(paramValue, {populate:true}).then(function(){
-				$scope.$apply(function(){
-					$scope.restaurant = model.instance;
-					$scope.restaurant.menuItems = $scope.restaurant.meals;
-					var find = true;
-					if (!notlogged) {
-						for (var i = 0; i < $scope.restaurant.actions.ratings.users.length && find; i++) {
-							if ($scope.restaurant.actions.ratings.users[i].userId == $scope.user._id) {
-								$scope.yourvote = $scope.restaurant.actions.ratings.users[i].rating
-								$scope.voted = true;
-								find = false;
+			model.get({"_id" : paramValue})
+				.then(function(model){
+					$scope.$apply(function(){
+						$scope.restaurant = model.data[0];
+						var meal_ids = model.data[0].meals;
+						var meals = [];
+						for(var i = 0; i < meal_ids.length; i += 1) {
+							Stamplay.Object("meal")
+								.get({ _id : meal_ids[i] })
+									.then(function(res) {
+										meals.push(res.data[0]);
+											$scope.$apply();
+									})
+						}
+
+
+						$scope.restaurant.menuItems = meals;
+						var find = true;
+						if (!notlogged) {
+							for (var i = 0; i < $scope.restaurant.actions.ratings.users.length && find; i++) {
+								if ($scope.restaurant.actions.ratings.users[i].userId == $scope.user._id) {
+									$scope.yourvote = $scope.restaurant.actions.ratings.users[i].rating
+									$scope.voted = true;
+									find = false;
+								}
 							}
 						}
-					}
+					})
+				},function(){
+					$scope.error = 'Ops something went wrong'
 				})
-			},function(){
-				$scope.error = 'Ops something went wrong'
-			}) 
 		}
 
 		//Set some variable
@@ -75,7 +91,7 @@ app.controller('MenuCtrl', ['$scope', '$http','$stamplay' ,'userStatus','restaur
 			}
 		}
 
-		//function for show or hide modal 
+		//function for show or hide modal
 		$scope.showModal = function () {
 			globalVariable.showModal('#checkoutModal')
 		}
@@ -85,35 +101,38 @@ app.controller('MenuCtrl', ['$scope', '$http','$stamplay' ,'userStatus','restaur
 
 		//function for checkout order
 		$scope.checkout = function (restaurant) {
-			//check if all field are not empty 
+			//check if all field are not empty
 			if (Object.keys($scope.card).length != 4 || Object.keys($scope.delivery).length != 4) {
 				$scope.modal.error = 'All fields are required'
 			} else {
-				//create an order 
+				//create an order
 				var meals = []
 				for (var i = 0; i < $scope.cart.items.length; i++) {
 					meals.push($scope.cart.items[i].name)
 				}
-				var order = $stamplay.Cobject('order').Model
-				order.set('email', $scope.delivery.email)
-				order.set('surname', $scope.delivery.surname)
-				order.set('address', $scope.delivery.address)
-				order.set('notes', $scope.delivery.notes)
-				order.set('meals', meals)
-				order.set('price', $scope.cart.total)
-				order.set('delivered', false)
+				var orderContents = {
+					email : $scope.delivery.email,
+					surname : $scope.delivery.surname,
+					address : $scope.delivery.address,
+					notes : $scope.delivery.notes,
+					meals : meals,
+					price : $scope.cart.total,
+					delivered : false
+				}
 
-				order.save().then(function(){
+				var order = Stamplay.Object('order');
+
+				order.save(orderContents).then(function(){
 					globalVariable.hideModal('#checkoutModal')
 					$scope.$apply(function(){
 						$scope.cart = {};
 				 		$scope.cart.items = []
 				 		$scope.cart.total = 0;
 					})
-					var webhook = new Stamplay.Webhook('ordercomplete');
-					var data = { 
-							restaurant_owner_email: restaurant.owner_email, 		
-							order: data 
+					var webhook = Stamplay.Webhook('ordercomplete');
+					var data = {
+							restaurant_owner_email: restaurant.owner_email,
+							order: data
 					}
 					webhook.post(data).then(function (response) {}, function( err ){
 					  $scope.modal.error = 'Ops Something went Wrong'

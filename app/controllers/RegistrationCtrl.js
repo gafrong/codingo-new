@@ -4,7 +4,7 @@ app.controller('RegistrationCtrl', ['$scope', 'userStatus', 'globalVariable', 'v
 
 		//setting regexp for email field
 		$scope.EMAIL = globalVariable.email
-		//register function 
+		//register function
 		$scope.register = function () {
 			if ($scope.email && $scope.password) {
 				var user = {
@@ -17,7 +17,7 @@ app.controller('RegistrationCtrl', ['$scope', 'userStatus', 'globalVariable', 'v
 					//first step verify email is not already used
 				validator.validateEmail(validate)
 					.success(function (data, status) {
-						//second step register user         
+						//second step register user
 						userStatus.registerUser(user).then(function(){
 							window.location.href="/"
 						},function(){
