@@ -1,18 +1,28 @@
-<div class="navbar">
-  <div class="navbar-inner">
-    <a class="brand" ui-sref="home">CODINGO</a>
-	    <ul class="nav">
-        <li ng-class="{active: routeIs('')}"><a ui-sref="home">Home</a></li>
-        <li ng-class="{active: routeIs('how-it-works')}"><a ui-sref="how-it-works">How it works</a></li>
+  <nav class="green lighten-3 white-text">
+    <div class="nav-wrapper">
+      <a ui-sref="home" class="brand-logo">CODINGO</a>
+      <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+      <ul class="right hide-on-med-and-down">
+        <li class=""><a ui-sref="pricing">Pricing</a></li>
+        <li class="" ng-if="!currentUser.id"><a ui-sref="signup">회원가입</a></li>
+        <li class="" ng-if="!currentUser.id"><a ui-sref="login">로그인</a></li>
+        <li class="" ng-if="currentUser.id" ><a ui-sref="home" ng-click="logout()">Logout!!!!</a></li>
+        <li class=""><a ui-sref="/"></a></li>
       </ul>
-
-      <ul class="nav pull-right">
-        <li ng-show="logged" ng-class="{active: routeIs('logout')}">
-          <a ng-click="logout()">Logout</a>
-        </li>
-        <li ng-hide="logged" ng-class="{active: routeIs('login')}">
-          <a ui-sref="login">Login</a>
-        </li>
+      <ul class="side-nav" id="mobile-demo">
+        <li class="" ng-if="!currentUser.id"><a ui-sref="signup">회원가입GO</a></li>
+        <li class="" ng-if="!currentUser.id"><a ui-sref="login">로그인</a></li>
+        <li class="" ng-if="currentUser.id" ng-click="logout()"><a>로그아웃</a></li>
+        <li class=""><a ui-sref="pricing">Pricing</a></li>
+        <li></li>
       </ul>
     </div>
-  </div>
+  </nav>
+
+<script>
+    // Initialize collapse button
+  $(".button-collapse").sideNav();
+  // Initialize collapsible (uncomment the line below if you use the dropdown variation)
+  //$('.collapsible').collapsible();
+</script>
+

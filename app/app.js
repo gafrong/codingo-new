@@ -5,28 +5,27 @@ var app = angular.module('codingo', [
 .run(function() {
 	Stamplay.init("codingo");
 })
-.config(
-	['$stateProvider', '$urlRouterProvider',
+.config(['$stateProvider', '$urlRouterProvider',
 	function ($stateProvider, $urlRouterProvider) {
 
-	$urlRouterProvider.otherwise('/');
+	$urlRouterProvider.otherwise('/home');
 
 	$stateProvider
-
 		.state('home', {
 			url: '/',
 			views: {
 				'': {
-					controller: 'RestaurantCtrl',
-					templateUrl: './app/partials/home.html'
+					templateUrl: './app/home/home.html'
 				},
 				'header': {
-					controller: 'NavbarCtrl',
 					templateUrl: 'app/partials/header.html',
+					controller: 'NavbarCtrl'
+				},
+				'footer': {
+					templateUrl: 'app/partials/footer.html'
 				}
 			}
 		})
-
 		.state('login', {
 			url: '/login',
 			views: {
@@ -35,12 +34,29 @@ var app = angular.module('codingo', [
 					templateUrl: 'app/partials/login.html'
 				},
 				'header': {
-					controller: 'NavbarCtrl',
 					templateUrl: 'app/partials/header.html',
+					controller: 'NavbarCtrl'
+				},
+				'footer': {
+					templateUrl: 'app/partials/footer.html'
 				}
 			}
 		})
-
+    .state('pricing', {
+      url: '/pricing',     
+      views: {
+        '': {
+          templateUrl: '/app/pricing/pricing.html'
+        },
+        'header': {
+          templateUrl: '/app/partials/header.html',
+          controller: 'NavbarCtrl'
+        },
+				'footer': {
+					templateUrl: 'app/partials/footer.html'
+				}
+      }
+    })
 		.state('how-it-works', {
 			url: '/how-it-works',
 			views: {
@@ -48,44 +64,28 @@ var app = angular.module('codingo', [
 					templateUrl: 'app/partials/how-it-works.html'
 				},
 				'header': {
-					controller: 'NavbarCtrl',
 					templateUrl: 'app/partials/header.html',
+					controller: 'NavbarCtrl'
+				},
+				'footer': {
+					templateUrl: 'app/partials/footer.html'
 				}
 			}
 		})
-
 		.state('registration', {
 			url: '/registration',
 			views: {
 				'': {
-					controller: 'RegistrationCtrl',
-					templateUrl: 'app/partials/registration.html'
+					templateUrl: 'app/partials/registration.html',
+					controller: 'RegistrationCtrl'
 				},
 				'header': {
-					controller: 'NavbarCtrl',
 					templateUrl: 'app/partials/header.html',
+					controller: 'NavbarCtrl'
+				},
+				'footer': {
+					templateUrl: 'app/partials/footer.html'
 				}
 			}
 		})
-
-		.state('menu', {
-			url: '/menu/:id',
-			views: {
-				'': {
-					controller: 'MenuCtrl',
-					templateUrl: 'app/partials/menu.html',
-					resolve: {
-						qId: function ($stateParams) {
-							return $stateParams.id;
-						}
-					}
-				},
-				'header': {
-					controller: 'NavbarCtrl',
-					templateUrl: 'app/partials/header.html',
-				}
-			},
-
-		});
-
 }]);

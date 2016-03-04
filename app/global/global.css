@@ -1,0 +1,19 @@
+.center {
+  text-align: center;
+  margin: 0 auto;
+}
+.page-title {
+  display: block;
+  width: 100%;
+  padding: 50px;
+}
+.full-width {
+  width: 100%;
+  display: block;
+}
+.absolute {
+  position: absolute;
+}
+.width400 {
+  max-width: 400px;
+}

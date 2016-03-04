@@ -1,0 +1,24 @@
+.main-background {
+  margin-top: 30px;
+  padding-top: 60px;
+  height: 320px;
+  /*background: url(https://s3.ap-northeast-2.amazonaws.com/codingogo/images/keyboard.jpg) no-repeat center center;*/
+  /*-webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;  
+  background-size: cover;*/
+  /*opacity: 0.2;*/
+}
+nav .brand-logo {
+  padding-left: 20px;
+}
+nav .button-collapse i{
+  padding-left: 10px;
+}
+/*.sub-background {
+  float: left;
+  width: 100%;
+  background: rgba(55, 63, 55, 0.95);
+  height: 400px;
+  z-index: 999;
+}*/
